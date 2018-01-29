@@ -3,7 +3,6 @@ package com.kk.websocket.handler;
 import java.io.IOException;
 import java.util.List;
 
-import com.kk.service.UserService;
 import com.kk.websocket.persisted.SessionQueue;
 import com.kk.websocket.persisted.TSession;
 import org.apache.commons.logging.Log;
@@ -27,9 +26,6 @@ public class WebSocketHandler implements
     private static Log logger = LogFactory.getLog(WebSocketHandler.class);
 
 
-    @Autowired
-    UserService userService;
-
     /**
      * 关闭连接后
      */
@@ -50,7 +46,6 @@ public class WebSocketHandler implements
         Integer uid = (Integer) session.getAttributes().get("uid");
 
         TSession tSession = new TSession(uid, session);
-        tSession.setName(userService.getUser(uid).getRealname());
         
         SessionQueue.getInstance().add(tSession);
     }
