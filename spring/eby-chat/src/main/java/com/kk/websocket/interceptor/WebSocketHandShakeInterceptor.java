@@ -60,7 +60,7 @@ public class WebSocketHandShakeInterceptor implements HandshakeInterceptor {
 
             HttpServletRequest req = httpRequest.getServletRequest();
 
-
+//            attributes.put("uid", Integer.valueOf(user.getId()));
             // 拦截器
 
             return true;

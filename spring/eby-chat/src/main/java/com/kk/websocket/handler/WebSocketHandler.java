@@ -43,9 +43,9 @@ public class WebSocketHandler implements
     @Override
     public void afterConnectionEstablished(WebSocketSession session)
             throws Exception {
-        Integer uid = (Integer) session.getAttributes().get("uid");
+        //Integer uid = (Integer) session.getAttributes().get("uid");
 
-        TSession tSession = new TSession(uid, session);
+        TSession tSession = new TSession(0, session);
         
         SessionQueue.getInstance().add(tSession);
     }
