@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kk.dao.CodeContentDao">
+    <sql id="Columns">
+        id,user_id,session_id,type,content,gmt_create
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="CodeContent">
+        select
+        <include refid="Columns"/>
+        from code_content where id = #{id}
+    </select>
+
+    <select id="getLastContent"  resultType="string">
+        select content
+        from code_content where user_id = #{userId} and type=#{type} order by id desc limit 1
+    </select>
+
+    <select id="getTotalContentByUserId"  resultType="int">
+        select count(1)
+        from code_content where user_id = #{userId} and type=#{type} order by id desc limit 1
+    </select>
+
+    <insert id="insert" parameterType="CodeContent" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        code_content( user_id, session_id, type, content, gmt_create)
+        values(#{userId},#{sessionId},#{type},#{content},#{gmtCreate})
+    </insert>
+
+    <update id="updateById" parameterType="CodeContent">
+        update code_content set
+        user_id=#{userId},session_id=#{sessionId},type=#{type},content=#{content},gmt_create=#{gmtCreate}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        delete from code_content where
+        id=#{id}
+    </delete>
+
+    <delete id="deleteContentBeforeTime" >
+        delete from code_content where
+        gmt_create &lt;= #{time}
+    </delete>
+
+    <delete id="deleteContentByUserId" >
+        delete from code_content where
+        user_id=#{userId}
+    </delete>
+
+    <delete id="deleteContentLimitedByUserId" >
+        delete from code_content where
+        user_id=#{userId}  order by id  limit #{limit}
+    </delete>
+
+</mapper>
